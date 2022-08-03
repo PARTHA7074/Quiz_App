@@ -1,26 +1,33 @@
 package com.panjacreation.quiz.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.panjacreation.quiz.Activity.MainActivity;
 import com.panjacreation.quiz.JavaClass.QuestionModel;
 import com.panjacreation.quiz.R;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class MCQFragment extends Fragment {
     int counter = 0;
-    ArrayList<QuestionModel> questionModelsArray = new ArrayList<>();
+    ArrayList<QuestionModel> questionModelsArray;
     MaterialTextView option1,option2,option3,option4;
     TextView question;
     int answer;
@@ -28,8 +35,9 @@ public class MCQFragment extends Fragment {
     public MCQFragment() {
         // Required empty public constructor
     }
-    public MCQFragment(int Counter){
+    public MCQFragment(int Counter,ArrayList<QuestionModel> questionModelsArray){
         this.counter = Counter;
+        this.questionModelsArray = questionModelsArray;
     }
 
     @Override
@@ -37,7 +45,7 @@ public class MCQFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_m_c_q, container, false);
-        addDataToArray();
+
 
         question = view.findViewById(R.id.question);
         option1 = view.findViewById(R.id.answerA);
@@ -116,18 +124,6 @@ public class MCQFragment extends Fragment {
         return view;
     }
 
-    private void addDataToArray(){
-        questionModelsArray.add(new QuestionModel("Which one is not a nickname of a version of Andriod?",
-                "A) cupcake","B) gingerbread","C) honeycomb","D) muffin",4));
-        questionModelsArray.add(new QuestionModel("Which among these are NOT a part of Android’s native libraries?",
-                "A) webkit","B) dalvik","C) opengl","D) sqlite",2));
-        questionModelsArray.add(new QuestionModel("What operating system is used as the base of the Android stack?",
-                "A) linux","B) windows","C) java","D) xml",1));
-        questionModelsArray.add(new QuestionModel("When developing for the Android OS, Java byte code is compiled into what?",
-                "A) java source code","B) dalvik application code","C) dalvik byte code","D) c source code",3));
-        questionModelsArray.add(new QuestionModel("Android is licensed under which open source licensing license?",
-                "A) gnu’s gpl","B) apache/mit","C) oss","D) sourceforge",2));
-    }
 
     private void setTextViewUnClickable(){
         option1.setClickable(false);
@@ -135,4 +131,5 @@ public class MCQFragment extends Fragment {
         option3.setClickable(false);
         option4.setClickable(false);
     }
+
 }
